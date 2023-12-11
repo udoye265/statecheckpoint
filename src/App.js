@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import MovieList from "./MovieList";
+import Filter from "./Filter";
+import "./styles.css"
 
-function App() {
+const App = () => {
+  const moviesData = [
+  ];
+
+  const [movies, setMovies] = useState(moviesData);
+
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const posterURLRef = useRef();
+  const ratingRef = useRef();
+
+  const AddMovie = () => {
+    const newMovie = {
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      posterURL: posterURLRef.current.value,
+      rating: ratingRef.current.value,
+    };
+
+    setMovies([...movies, newMovie]);
+
+    titleRef.current.value = "";
+    descriptionRef.current.value = ""
+    posterURLRef.current.value = ""
+    ratingRef.current.value = ""
+  };
+ 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Filter onFilterChange />
+      <MovieList movies={movies} />
+
+      {/* Add New Movie section */}
+      <div>
+        <label htmlFor="title">Title:</label>
+        <input type="text" id="title" ref={titleRef} />
+
+        <label htmlFor="description">Description:</label>
+        <textarea id="description" ref={descriptionRef}></textarea>
+
+        <label htmlFor="posterURL">Poster URL:</label>
+        <input type="text" id="posterURL" ref={posterURLRef} />
+
+        <label htmlFor="rating">Rating:</label>
+        <input type="number" id="rating" ref={ratingRef} />
+
+        <button onClick={AddMovie}>Add Movie</button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
+
