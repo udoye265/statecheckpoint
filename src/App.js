@@ -4,10 +4,10 @@ import Filter from "./Filter";
 import "./styles.css"
 
 const App = () => {
-  const moviesData = [
-  ];
+  // const moviesData = [
+  // ];
 
-  const [movies, setMovies] = useState(moviesData);
+  const [movies, setMovies] = useState([]);
 
   const titleRef = useRef();
   const descriptionRef = useRef();
@@ -36,7 +36,14 @@ const App = () => {
       <Filter onFilterChange />
       <MovieList movies={movies} />
 
-      {/* Add New Movie section */}
+      {movies.map((movie)=>{
+        return <div>
+          <h1>{movie.title}</h1>
+          <h2>{movie.description}</h2>
+          <img src={movie.posterURL}/>
+          <p>{movie.rating}</p>
+        </div>
+      })}
       <div>
         <label htmlFor="title">Title:</label>
         <input type="text" id="title" ref={titleRef} />
